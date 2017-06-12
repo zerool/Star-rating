@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>星级评分原理和实现--第一种实现方式</title>
+    <link rel="stylesheet" type="" href="css/main.css">
+</head>
+<body>
+    <!-- 第一种实现方式 -->
+    <ul id="rating" class="rating">
+        <li class="rating_item" title="很不好"></li> 
+        <li class="rating_item" title="不好"></li> 
+        <li class="rating_item" title="一般"></li> 
+        <li class="rating_item" title="好"></li> 
+        <li class="rating_item" title="很好"></li> 
+    </ul>
+    
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script>
+        var num = 2,
+            $rating = $('#rating'),
+            $item = $rating.find('.rating_item');
+
+        //点亮
+        var lightOn = function(num) {
+            $item.each(function(index){
+                if(index < num) {
+                    $(this).css('background-position','0 -65px');
+                } else {
+                    $(this).css('background-position','0 0');
+                }
+            });
+        };
+
+        //初始化
+        lightOn(num);
+
+        //事件绑定
+        $item.on('mouseover',function() {
+            lightOn( $(this).index() + 1 );
+        }).on('click',function() {
+            num = $(this).index() +1;
+        });
+
+        $rating.on('mouseout',function() {
+            lightOn(num);
+        });
+
+        /* 存在的问题
+         * 1、全局变量多的时候，容易造成命名冲突
+         * 2、每个li都绑定了点击事件，造成浪费
+         * 
+         * 
+        */
+
+
+    </script>
+</body>
+</html>
